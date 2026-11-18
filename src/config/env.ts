@@ -14,6 +14,10 @@ const envSchema = Joi.object({
     DB_PASSWORD: Joi.string().required(),
     DB_DATABASE: Joi.string().required(),
     FRONTEND_URL: Joi.string().uri().default('http://localhost:4200'),
+     // Add JWT configuration
+   JWT_SECRET: Joi.string().min(32).required(),
+   JWT_EXPIRES_IN: Joi.string().default('24h'),
+
 }).unknown();
 
 const { value: env, error } = envSchema.prefs({ 
@@ -37,5 +41,9 @@ export const config = {
         password: env.DB_PASSWORD,
         database: env.DB_DATABASE,
     },
+    jwt: {
+    secret: process.env.JWT_SECRET || 'your-secret-key',
+    expiresIn: process.env.JWT_EXPIRES_IN || '1h',
+},
     frontendUrl: env.FRONTEND_URL,
 };

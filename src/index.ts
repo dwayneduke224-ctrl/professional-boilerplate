@@ -12,6 +12,8 @@ import { requestLoggingMiddleware } from './middleware/requestLogger';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { userRoutes } from './routes/userRoutes';
 import { healthRoutes } from './routes/healthRoutes';
+import { authRoutes } from './routes/authRoutes';  // ← Add this
+
 
 const app = express();
 
@@ -25,6 +27,7 @@ app.use(requestLoggingMiddleware);
 
 app.use('/health', healthRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
